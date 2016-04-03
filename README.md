@@ -1,4 +1,5 @@
-# KBIR - Keyboard Intermediate Representation
+# KBIR - Keyboard Intermediate Representation 
+[![Build Status](https://travis-ci.org/rswiernik/KBIR.svg?branch=master)](https://travis-ci.org/rswiernik/KBIR)
 
 KBIR is a project that aims to make the process of creating layouts for your keyboard a little easier.
 
