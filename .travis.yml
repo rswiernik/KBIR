@@ -6,7 +6,7 @@ python:
 before_script:
   - chmod +x tests/build.py
 
-script: tests/build.py
+script: "python tests/build.py"
 branches:
   only:
     - master
