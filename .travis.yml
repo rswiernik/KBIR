@@ -7,7 +7,7 @@ python:
 before_script:
   - chmod +x tests/build.py
 
-script: "python tests/build.sh"
+script: "bash tests/build.sh"
 branches:
   only:
     - master
