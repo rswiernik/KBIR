@@ -17,6 +17,7 @@ def main(args):
 
 
 	logging.debug("Starting - %s, %s" % (HOSTNAME, args.port))
+
 	logging.debug("Stopping - %s, %s" % (HOSTNAME, args.port)) 
 
 
