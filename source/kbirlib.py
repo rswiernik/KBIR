@@ -1,3 +1,5 @@
+from string import Template
+
 class KeyboardRepresentation:
 	def __init__(self, name=None, cols=None, rows=None):
 		if name is None:
@@ -47,8 +49,7 @@ class KeyboardRepresentation:
 			return self.generateTMKLayout()
 
 	def generateTMKLayout(self):
-		printedLayout = ""
-		outputString = '''\		
+		layoutTemplate = Template('''\
 		#include "keymap_common.h"
 
 		/*
@@ -56,16 +57,64 @@ class KeyboardRepresentation:
 		 */
 		const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-		{% layers %}
+		${layers}
 
 		};
 		const uint16_t PROGMEM fn_actions[] = {
 
-			{% fn_actions %}
+		${functions}
 
 		};\
-		'''
-		print outputString
+		'''.strip())
+
+		layerTemplate = Template('''\
+		[${layerNumber}] = KEYMAP_GRID( /* ${comment} */
+		${layerData}\
+		'''.strip())
+
+		functionTemplate = Template('''\
+		[${functionNum}] = ${functionValue}, /* ${comment} */\
+		'''.strip())
+		
+		
+		layers = []
+		for layerNum in self.layout:
+			layer = ""
+			layerTemplateDict = dict(layerNumber=layerNum)
+			for row in self.layout[layerNum][:-1]:
+				for keyChar in row[:-1]:
+					layer = layer + keyChar + ", "
+				layer = layer + row[-1] + ",\n"
+			finalRow = (self.layout[layerNum])[-1]
+			for keyChar in finalRow[:-1]:
+				layer = layer + keyChar + ", "
+			layer = layer + finalRow[-1] + "),\n"
+			layerTemplateDict["layerData"] = layer
+			layerTemplateDict["comment"] = "This is a comment"
+			layers.append(layerTemplate.safe_substitute(layerTemplateDict))
+
+		layerString = ""
+		for layer in layers:
+			layerString = layerString + layer + "\n"
+
+		
+		functions = []
+		functionNumber = 0
+		for function in self.functions:
+			functionDict = dict( comment=function, functionValue=self.functions[function], functionNum=functionNumber)
+			functions.append(functionTemplate.safe_substitute(functionDict))
+			functionNumber = functionNumber + 1
+		print "functions:"
+		print functions
+		functionString = ""
+		for function in functions:
+			functionString = functionString + function + "\n"
+		print "func string: "+functionString
+
+
+		layoutTemplateDict = dict(layers=layerString, functions=functionString)
+		outputString = layoutTemplate.safe_substitute(layoutTemplateDict)
+
 		return outputString
 
 

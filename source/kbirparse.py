@@ -38,17 +38,13 @@ def generateFirmwareLayout(outputFilename, firmwareName, kbirObj):
 		logging.error("Error when writing file: File %s exists" % (outputFilename))
 		exit(1)
 	else:
-		layoutOuput = kbirObj.generateLayout(firmwareName)
-		logging.debug("wtf is this: %s" % (layoutOutput)) 
+		layoutOutput = kbirObj.generateLayout(firmwareName)
 		with open(outputFilename, "w") as f:
-			
-			if layoutOuput != "firmware not found":
+			if layoutOutput != "firmware not found":
 				f.write(layoutOutput)
 			else:
 				logging.error("Error: firmware \'%s\' is not supported" % (firmwareName))
 				exit(1)
-				
-			
 
 
 def parseLayoutFile(filename):
@@ -113,7 +109,9 @@ def parseLayoutFile(filename):
 					break
 		logging.debug("def row -> \'%s\'" % (kbirObj.printLayout()))
 		currentLine = currentLine + 1
-
+	
+	kbirObj.setGlobals(global_settings)
+	kbirObj.setFunctions(function_settings)
 	return kbirObj
 
 if __name__ == '__main__':
