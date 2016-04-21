@@ -55,8 +55,9 @@ def parseLayoutFile(filename):
 					logging.debug("function lines -> \'%s\'" % (line))
 					if line == "":
 						continue
-					function = line.split(':')
-					logging.debug("def func -> \'%s\'" % (function))
+					if ":" in line:
+						function = line.split(':')
+						logging.debug("def func -> \'%s\'" % (function))
 				if currentLine >= (len(lines)-1) or line == "---":
 					break
 		if line == "-- layers --":
@@ -64,7 +65,14 @@ def parseLayoutFile(filename):
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
 					line = (lines[currentLine].strip()).rstrip()
-					logging.debug("function lines -> \'%s\'" % (line))
+					logging.debug("layer lines -> \'%s\'" % (line))
+					if line == "":
+						continue
+					layer_row = line.split()
+					row = []
+					for key in layer_row:
+						row.append(key)
+					logging.debug("def row -> \'%s\'" % (row))
 				if currentLine >= (len(lines)-1) or line == "-- layers --":
 					break
 				
