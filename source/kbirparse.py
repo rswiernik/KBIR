@@ -11,6 +11,8 @@ def main(args):
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('-v', '--verbose', help='enable verbose output', action='store_true')
 	parser.add_argument('-k', '--keyboard', action='store', dest='kbl_file', type=str, help='The file path to the kbl file you would like to use.')
+	parser.add_argument('-o', '--output-file', action='store', dest='outputFilename', type=str, default='output.layout', help='Layout output filename')
+	parser.add_argument('-f', '--firmware', action='store', dest='firmwareName', type=str, default='tmk', help='Fireware layout style to output to file')
 	args = parser.parse_args()
 
 	LOG_FORMAT = '%(asctime)-15s %(message)s'
@@ -24,9 +26,29 @@ def main(args):
 
 	logging.debug("Starting - %s: %s" % ("Building layout", args.kbl_file))
 	
-	parseLayoutFile(args.kbl_file)
+	layoutRepr = parseLayoutFile(args.kbl_file)
+	generateFirmwareLayout(args.outputFilename, args.firmwareName, layoutRepr)
 
 	logging.debug("Stopping - %s: %s" % ("Ending layout build", args.kbl_file)) 
+
+
+
+def generateFirmwareLayout(outputFilename, firmwareName, kbirObj):
+	if os.path.isfile(outputFilename):
+		logging.error("Error when writing file: File %s exists" % (outputFilename))
+		exit(1)
+	else:
+		layoutOuput = kbirObj.generateLayout(firmwareName)
+		logging.debug("wtf is this: %s" % (layoutOutput)) 
+		with open(outputFilename, "w") as f:
+			
+			if layoutOuput != "firmware not found":
+				f.write(layoutOutput)
+			else:
+				logging.error("Error: firmware \'%s\' is not supported" % (firmwareName))
+				exit(1)
+				
+			
 
 
 def parseLayoutFile(filename):
@@ -90,9 +112,9 @@ def parseLayoutFile(filename):
 				if currentLine >= (len(lines)-1) or line == "-- layers --":
 					break
 		logging.debug("def row -> \'%s\'" % (kbirObj.printLayout()))
-		
 		currentLine = currentLine + 1
 
+	return kbirObj
 
 if __name__ == '__main__':
 	sys.exit(main(sys.argv))
