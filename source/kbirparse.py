@@ -23,7 +23,9 @@ def main(args):
 
 
 	logging.debug("Starting - %s: %s" % ("Building layout", args.kbl_file))
+	
 	parseLayoutFile(args.kbl_file)
+
 	logging.debug("Stopping - %s: %s" % ("Ending layout build", args.kbl_file)) 
 
 
@@ -40,18 +42,23 @@ def parseLayoutFile(filename):
 		line = (lines[currentLine].strip()).rstrip()
 		logging.debug("analyzing line -> %s" % (line))
 		if line == "---":
+			layout_settings = {}
 			while True:
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
-					line = (lines[currentLine].strip()).rstrip()
+					line = lines[currentLine].strip()
 					logging.debug("title lines -> \'%s\'" % (line))
+					if ":" in line:
+						function = line.split(':')
+						logging.debug("global func -> \'%s\'" % (function))
+					
 				if currentLine >= (len(lines)-1) or line == "---":
 					break
 		if line == "-- functions --":
 			while True:
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
-					line = (lines[currentLine].strip()).rstrip()
+					line = lines[currentLine].strip()
 					logging.debug("function lines -> \'%s\'" % (line))
 					if line == "":
 						continue
@@ -61,12 +68,14 @@ def parseLayoutFile(filename):
 				if currentLine >= (len(lines)-1) or line == "---":
 					break
 		if line == "-- layers --":
+			currentLayer = 0
 			while True:
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
-					line = (lines[currentLine].strip()).rstrip()
-					logging.debug("layer lines -> \'%s\'" % (line))
+					line = lines[currentLine].strip()
+					logging.debug("layer %s lines -> \'%s\'" % (currentLayer, line))
 					if line == "":
+						currentLayer = currentLayer + 1
 						continue
 					layer_row = line.split()
 					row = []
@@ -77,6 +86,8 @@ def parseLayoutFile(filename):
 					break
 				
 		currentLine = currentLine + 1
+	
+
 
 
 if __name__ == '__main__':
