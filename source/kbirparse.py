@@ -79,6 +79,7 @@ def parseLayoutFile(filename):
 					logging.debug("layer %s lines -> \'%s\'" % (currentLayer, line))
 					if line == "":
 						currentLayer = currentLayer + 1
+						kbirObj.addLayer(currentLayer)
 						continue
 					layerRow = line.split()
 					row = []
@@ -91,8 +92,6 @@ def parseLayoutFile(filename):
 		logging.debug("def row -> \'%s\'" % (kbirObj.printLayout()))
 		
 		currentLine = currentLine + 1
-	
-
 
 
 if __name__ == '__main__':
