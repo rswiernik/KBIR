@@ -27,7 +27,13 @@ def main(args):
 	logging.debug("Stopping - %s: %s" % ("Ending layout build", args.keyboard_type)) 
 
 
-def parseLayoutFile
+def parseLayoutFile(filename):
+	logging.debug("Parsing file: %s" & (filename))
+
+	with open(filename, "r") as f:
+		for line in f:
+			print line
+
 
 
 if __name__ == '__main__':

@@ -5,11 +5,10 @@ class KeyboardRepresentation:
 		self.name       = name
 		self.numColumns = cols
 		self.numRows    = rows
-		self.keyMatrix  = [][]
-		self.layers     = []
+		self.layout     = []
 
 	def addKey(key, layer, row):
-		keyMatrix[row].append(key)
+		layout[layer][row].append(key)
 
 	def __str__(self):
 		return "Layout: " + self.name + "\n" + self.numColumns + " x " + self.numRows
