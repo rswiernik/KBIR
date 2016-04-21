@@ -37,21 +37,23 @@ def parseLayoutFile(filename):
 		for line in f:
 			lines.append(line)
 	
+	global_settings = {}
+	function_settings = {}
+	kbirObj = kbirlib.KeyboardRepresentation()
 	currentLine = 0
 	while currentLine < len(lines):
 		line = (lines[currentLine].strip()).rstrip()
 		logging.debug("analyzing line -> %s" % (line))
 		if line == "---":
-			layout_settings = {}
 			while True:
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
 					line = lines[currentLine].strip()
 					logging.debug("title lines -> \'%s\'" % (line))
 					if ":" in line:
-						function = line.split(':')
-						logging.debug("global func -> \'%s\'" % (function))
-					
+						setting = line.split(':')
+						logging.debug("def global -> \'%s\'" % (setting))
+						global_settings[setting[0]] = setting[1].strip()
 				if currentLine >= (len(lines)-1) or line == "---":
 					break
 		if line == "-- functions --":
@@ -65,10 +67,11 @@ def parseLayoutFile(filename):
 					if ":" in line:
 						function = line.split(':')
 						logging.debug("def func -> \'%s\'" % (function))
+						function_settings[function[0]] = function[1].strip()
 				if currentLine >= (len(lines)-1) or line == "---":
 					break
 		if line == "-- layers --":
-			currentLayer = 0
+			currentLayer = -1
 			while True:
 				if currentLine < (len(lines) - 1):
 					currentLine = currentLine + 1
@@ -77,14 +80,16 @@ def parseLayoutFile(filename):
 					if line == "":
 						currentLayer = currentLayer + 1
 						continue
-					layer_row = line.split()
+					layerRow = line.split()
 					row = []
-					for key in layer_row:
+					for key in layerRow:
 						row.append(key)
 					logging.debug("def row -> \'%s\'" % (row))
+					kbirObj.addRow(row, currentLayer)
 				if currentLine >= (len(lines)-1) or line == "-- layers --":
 					break
-				
+		logging.debug("def row -> \'%s\'" % (kbirObj.printLayout()))
+		
 		currentLine = currentLine + 1
 	
 
