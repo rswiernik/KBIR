@@ -9,5 +9,10 @@ echo "Alright, let's do this... LEEROY"
 
 python source/kbirparse.py -k layouts/planck_standard.kbl
 
-
-exit 0
+if [[ $? -eq 0 ]]; then
+	echo "Build successful."
+	exit 0
+else
+	echo "Build failed..."
+	exit 1
+fi
