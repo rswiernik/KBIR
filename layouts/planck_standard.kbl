@@ -6,7 +6,7 @@ name: Reed's Planck Layout
 
 fun_8:
 	ACTION_LAYER_MOMENTARY(1)
-
+---
 -- layers --
 
 tab   q w e r t y u i o p backspace

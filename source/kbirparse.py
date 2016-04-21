@@ -29,11 +29,46 @@ def main(args):
 
 def parseLayoutFile(filename):
 	logging.debug("Parsing file: %s" % (filename))
-
+	
+	lines = []
 	with open(filename, "r") as f:
 		for line in f:
-			logging.debug(line.rstrip())
-
+			lines.append(line)
+	
+	currentLine = 0
+	while currentLine < len(lines):
+		line = (lines[currentLine].strip()).rstrip()
+		logging.debug("analyzing line -> %s" % (line))
+		if line == "---":
+			while True:
+				if currentLine < (len(lines) - 1):
+					currentLine = currentLine + 1
+					line = (lines[currentLine].strip()).rstrip()
+					logging.debug("title lines -> \'%s\'" % (line))
+				if currentLine >= (len(lines)-1) or line == "---":
+					break
+		if line == "-- functions --":
+			while True:
+				if currentLine < (len(lines) - 1):
+					currentLine = currentLine + 1
+					line = (lines[currentLine].strip()).rstrip()
+					logging.debug("function lines -> \'%s\'" % (line))
+					if line == "":
+						continue
+					function = line.split(':')
+					logging.debug("def func -> \'%s\'" % (function))
+				if currentLine >= (len(lines)-1) or line == "---":
+					break
+		if line == "-- layers --":
+			while True:
+				if currentLine < (len(lines) - 1):
+					currentLine = currentLine + 1
+					line = (lines[currentLine].strip()).rstrip()
+					logging.debug("function lines -> \'%s\'" % (line))
+				if currentLine >= (len(lines)-1) or line == "-- layers --":
+					break
+				
+		currentLine = currentLine + 1
 
 
 if __name__ == '__main__':
