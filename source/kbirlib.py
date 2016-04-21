@@ -104,12 +104,10 @@ class KeyboardRepresentation:
 			functionDict = dict( comment=function, functionValue=self.functions[function], functionNum=functionNumber)
 			functions.append(functionTemplate.safe_substitute(functionDict))
 			functionNumber = functionNumber + 1
-		print "functions:"
-		print functions
+
 		functionString = ""
 		for function in functions:
 			functionString = functionString + function + "\n"
-		print "func string: "+functionString
 
 
 		layoutTemplateDict = dict(layers=layerString, functions=functionString)

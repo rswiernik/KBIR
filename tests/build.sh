@@ -9,6 +9,8 @@ echo "Alright, let's do this... LEEROY"
 
 python source/kbirparse.py -k layouts/planck_standard.kbl -v
 
+cat output.layout
+
 if [[ $? -eq 0 ]]; then
 	echo "Build successful."
 	exit 0
