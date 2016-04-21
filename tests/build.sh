@@ -7,7 +7,7 @@ fi
 
 echo "Alright, let's do this... LEEROY"
 
-python source/kbirparse.py -k layouts/planck_standard.kbl
+python source/kbirparse.py -k layouts/planck_standard.kbl -v
 
 if [[ $? -eq 0 ]]; then
 	echo "Build successful."
