@@ -2,3 +2,4 @@
 *.swp
 kbir-dev/
 output.layout
+bazel-*
