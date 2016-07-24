@@ -1,6 +1,6 @@
 language: java
-jdk:
-  - oraclejdk8
+jdk: oraclejdk8
+compiler: clang
 python:
   - "2.7"
 env:
