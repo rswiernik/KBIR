@@ -1,4 +1,4 @@
 sh_test(
-    name = "test_build",
+    name = "kbir_tests",
     srcs = ["build.sh"],
 )
