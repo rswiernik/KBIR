@@ -53,7 +53,7 @@ class KeyboardRepresentation:
 		with open("source/keyboardProfiles/tmk/layout.template", "r") as f:
 			for line in f:
 				fileLines.append(line)
-		
+
 		newLayoutString = ""
 		for line in fileLines:
 			newLayoutString = newLayoutString + line.strip() + "\n"
@@ -68,8 +68,8 @@ class KeyboardRepresentation:
 		functionTemplate = Template('''\
 		[${functionNum}] = ${functionValue}, /* ${comment} */\
 		'''.strip())
-		
-		
+
+
 		layers = []
 		for layerNum in self.layout:
 			layer = ""
@@ -92,7 +92,7 @@ class KeyboardRepresentation:
 		for layer in layers:
 			layerString = layerString + layer + "\n"
 
-		
+
 		functions = []
 		functionNumber = 0
 		for function in self.functions:
