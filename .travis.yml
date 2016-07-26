@@ -11,7 +11,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install bazel
 script:
-  - bazel build source:kbir
+  - bazel build kbir:kbir
   - bazel test tests:kbir_tests --verbose_failures
 branches:
   only:
