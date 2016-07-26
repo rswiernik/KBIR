@@ -1,8 +1,9 @@
 py_test(
     name = "kbir_tests",
-    srcs = ["kbir_unit_tests.py"],
+    srcs = ["kbir_tests.py"],
     deps = [
-        "//source:kbir",
-    ]
-    main = "kbir_unit_tests.py"
+        "//kbir:kbir",
+    ],
+    main = "kbir_tests.py",
+    size = "small",
 )

@@ -1,3 +1,5 @@
+package(default_visibility = ["//visibility:public"])
+
 py_binary(
     name = "kbir",
     srcs = ["kbirparse.py"],
@@ -11,8 +13,3 @@ py_library(
     name = "kbirlib",
     srcs = ["kbirlib.py"],
 )
-
-#py_test(
-#    name = "runtests",
-#    srcs = ["//tests:test_build"],
-#)
