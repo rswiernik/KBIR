@@ -12,7 +12,7 @@ before_install:
   - sudo apt-get install bazel
 script:
   - bazel build kbir:kbir
-  - bazel test tests:kbir_tests --test_arg "" --verbose_failures
+  - bazel test tests:kbir_tests --verbose_failures
 branches:
   only:
     - master
